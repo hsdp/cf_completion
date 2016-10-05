@@ -1,12 +1,6 @@
 # completion for cf cli.
-# source this from your .bashrc
-
-# TODO:
-# implement a second level of search, for instance;
-#   cf bind-service APPNAME SERVICENAME
-# where we search for the service name after having input the appname.
-# We can go deeper than a second level, but not a lot of common commands require
-# it aside from create-service
+# source this file from your .bashrc
+# be sure to remove the old cf completion line as that one doesn't work
 
 # scrape the cli version to handle different help options
 FULLVERSION=$(cf --version|cut -d " " -f 3|cut -d + -f 1)
@@ -45,10 +39,6 @@ _cf_complete()
             return 0
             ;;
     esac
-
-    # we can now collect the word before the previous word. Woohoo!
-    local prev2=${COMP_WORDS[COMP_CWORD-2]}
-
     
     case "$prev1" in
         # org related commands or options
@@ -72,11 +62,26 @@ _cf_complete()
             return 0
             ;;
         # service commands
-        enable-service-access|disable-service-access)
+        create-service|enable-service-access|disable-service-access)
             COMPREPLY=( $(compgen -W "$(_cf_service)" -- $cur) )
             return 0
             ;;
     esac
+
+    # we can now collect the word before the previous word. Woohoo!
+    local prev2=${COMP_WORDS[COMP_CWORD-2]}
+
+    case "$prev2" in
+        bind-service)
+            COMPREPLY=( $(compgen -W "$(_cf_service_instance)" -- $cur) )
+            return 0
+            ;;
+        create-service)
+            COMPREPLY=( $(compgen -W "$(_cf_plan $prev1)" -- $cur) )
+            return 0
+            ;;
+    esac
+
 }
 
 _cf_app()
@@ -87,6 +92,10 @@ _cf_app()
 _cf_service()
 {
     cf marketplace | awk 'NR>4 {print $1}'|sed -n -e '1,/^$/p'
+}
+_cf_plan()
+{
+    cf marketplace -s "$1" | awk 'NR>4 {print $1}'
 }
 _cf_service_instance()
 {
