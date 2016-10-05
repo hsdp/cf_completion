@@ -8,8 +8,25 @@
 # We can go deeper than a second level, but not a lot of common commands require
 # it aside from create-service
 
+# scrape the cli version to handle different help options
+FULLVERSION=$(cf --version|cut -d " " -f 3|cut -d + -f 1)
+MAJORV=$(echo $FULLVERSION|cut -d . -f 1)
+MINORV=$(echo $FULLVERSION|cut -d . -f 2)
+PATCHV=$(echo $FULLVERSION|cut -d . -f 3)
+# produce a math compatible version number.
+VERSION=$(printf "%02d%02d%02d" $MAJORV $MINORV $PATCHV)
+
+# set the help command depending on the cli version
+if [ "$VERSION" -ge "062200" ]
+then
+    HELPOPT="-a "
+else
+    HELPOPT=""
+fi
+
 # gather the list of commands currently supported by cf cli.
-COMMANDS=$(cf help -a | sed -n -e '/GETTING STARTED:/,/ENVIRONMENT VARIABLES:/p' | grep '^   ' | awk '{print $1}')
+COMMANDS=$(cf help $HELPOPT | sed -n -e '/GETTING STARTED:/,/ENVIRONMENT VARIABLES:/p' | grep '^   ' | awk '{print $1}')
+   
 
 # peel out all of the carriage returns ungracefully
 COMMANDS=$(echo $COMMANDS)
