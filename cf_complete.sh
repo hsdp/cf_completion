@@ -72,7 +72,7 @@ _cf_complete()
     local prev2=${COMP_WORDS[COMP_CWORD-2]}
 
     case "$prev2" in
-        bind-service)
+        bind-service|unbind-service)
             COMPREPLY=( $(compgen -W "$(_cf_service_instance)" -- $cur) )
             return 0
             ;;
