@@ -72,8 +72,12 @@ _cf_complete()
     local prev2=${COMP_WORDS[COMP_CWORD-2]}
 
     case "$prev2" in
-        bind-service|unbind-service)
+        bind-service)
             COMPREPLY=( $(compgen -W "$(_cf_service_instance)" -- $cur) )
+            return 0
+            ;;
+        unbind-service)
+            COMPREPLY=( $(compgen -W "$(_cf_bound_service $prev1)" -- $cur) )
             return 0
             ;;
         create-service)
@@ -88,7 +92,6 @@ _cf_app()
 {
     cf apps | awk 'NR>4 {print $1}'
 }
-
 _cf_service()
 {
     cf marketplace | awk 'NR>4 {print $1}'|sed -n -e '1,/^$/p'
@@ -100,6 +103,10 @@ _cf_plan()
 _cf_service_instance()
 {
     cf services | awk 'NR>4 {print $1}'
+}
+_cf_bound_service()
+{
+    cf services | awk 'NR>4' | grep $1 | awk '{print $1}'
 }
 _cf_org()
 {
