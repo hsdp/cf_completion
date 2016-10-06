@@ -39,7 +39,8 @@ _cf_complete()
             return 0
             ;;
     esac
-    
+
+    # first arg after "cf"
     case "$prev1" in
         # org related commands or options
         -o|delete-org|rename-org|set-quota)
@@ -71,6 +72,7 @@ _cf_complete()
     # we can now collect the word before the previous word. Woohoo!
     local prev2=${COMP_WORDS[COMP_CWORD-2]}
 
+    # second argument after "cf"
     case "$prev2" in
         bind-service)
             COMPREPLY=( $(compgen -W "$(_cf_service_instance)" -- $cur) )
@@ -82,6 +84,14 @@ _cf_complete()
             ;;
         create-service)
             COMPREPLY=( $(compgen -W "$(_cf_plan $prev1)" -- $cur) )
+            return 0
+            ;;
+        set-org-role|set-space-role)
+            COMPREPLY=( $(compgen -W "$(_cf_org)" -- $cur) )
+            return 0
+            ;;
+        set-quota)
+            COMPREPLY=( $(compgen -W "$(_cf_org_quota)" -- $cur) )
             return 0
             ;;
     esac
@@ -115,6 +125,10 @@ _cf_org()
 _cf_space()
 {
     cf spaces | awk 'NR>3 {print $1}'
+}
+_cf_org_quota()
+{
+    cf quotas | awk 'NR>4 {print $1}'
 }
 
 complete -F _cf_complete cf
