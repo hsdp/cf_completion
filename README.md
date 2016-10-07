@@ -1,17 +1,15 @@
 # Cloud Foundry CLI Completion for bash
 Recent versions of cf cli seem to have broken the old completion provided by pivotal. 
 
-## Instructions
+### Instructions
 source cf_complete.sh from your .bashrc
 
     source ~/src/cf_completion/cf_complete.sh
 
 
-## TODO
-second level and deeper completion like completing the SERVICENAME in
-
-    cf bind-service APPNAME SERVICENAME
+### TODO
+  - Add completion handling for more subcommands
     
 
-## BUGS
+### BUGS
   - Won't gracefully handle orgs and spaces which have whitespace in the name.
