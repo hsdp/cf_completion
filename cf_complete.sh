@@ -43,7 +43,7 @@ _cf_complete()
     # first arg after "cf"
     case "$prev1" in
         # org related commands or options
-        -o|delete-org|rename-org|set-quota)
+        -o|delete-org|rename-org|set-quota|space-users|org)
             COMPREPLY=( $(compgen -W "$(_cf_org)" -- $cur) )
             return 0
             ;;
