@@ -52,8 +52,8 @@ _cf_complete()
             COMPREPLY=( $(compgen -W "$(_cf_space)" -- $cur) )
             return 0
             ;;
-        # app related commands
-        app|bind-service|unbind-service|copy-source|create-app-manifest|delete|env|events|files|logs|rename|restage|restart|restart-app-instance|scale|set-env|start|stop|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh)
+        # app related commands and options
+        app|bind-service|unbind-service|copy-source|create-app-manifest|delete|env|events|files|logs|rename|restage|restart|restart-app-instance|scale|set-env|start|stop|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh|--recent)
             COMPREPLY=( $(compgen -W "$(_cf_app)" -- $cur) )
             return 0
             ;;
