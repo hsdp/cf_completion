@@ -53,12 +53,12 @@ _cf_complete()
             return 0
             ;;
         # app related commands and options
-        app|bind-service|unbind-service|copy-source|create-app-manifest|delete|env|events|files|logs|rename|restage|restart|restart-app-instance|scale|set-env|start|stop|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh|--recent)
+        app|a|bind-service|bs|unbind-service|us|copy-source|create-app-manifest|delete|env|e|events|files|logs|rename|restage|rg|restart|rs|restart-app-instance|scale|set-env|se|start|st|stop|sp|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh|--recent)
             COMPREPLY=( $(compgen -W "$(_cf_app)" -- $cur) )
             return 0
             ;;
         # service instance related commands
-        delete-service|purge-service-instance|rename-service|service|update-service|service-key|service-keys)
+        delete-service|ds|purge-service-instance|rename-service|service|update-service|service-key|service-keys)
             COMPREPLY=( $(compgen -W "$(_cf_service_instance)" -- $cur) )
             return 0
             ;;
