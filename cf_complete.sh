@@ -67,6 +67,11 @@ _cf_complete()
             COMPREPLY=( $(compgen -W "$(_cf_service)" -- $cur) )
             return 0
             ;;
+        # quota commands
+        update-quota)
+            COMPREPLY=( $(compgen -W "$(_cf_org_quota)" -- $cur) )
+            return 0
+            ;;
     esac
 
     # we can now collect the word before the previous word. Woohoo!
