@@ -8,10 +8,12 @@ MAJORV=$(echo $FULLVERSION|cut -d . -f 1)
 MINORV=$(echo $FULLVERSION|cut -d . -f 2)
 PATCHV=$(echo $FULLVERSION|cut -d . -f 3)
 # produce a math compatible version number.
-VERSION=$(printf "%02d%02d%02d" $MAJORV $MINORV $PATCHV)
+VERSION=$(printf "%02d%02d%02d" $MAJORV $MINORV $PATCHV 2>/dev/null)
 
 # set the help command depending on the cli version
-if [ "$VERSION" -ge "062200" ]
+# 000000 indicates that the version is non-numeric and is probably a
+# self-built binary which we assume is recent
+if [ "$VERSION" -ge "062200" -o "$VERSION" -eq "000000" ]
 then
     HELPOPT="-a "
 else
