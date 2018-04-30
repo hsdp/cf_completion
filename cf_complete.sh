@@ -119,11 +119,11 @@ _cf_plan()
 }
 _cf_service_instance()
 {
-    cf services | awk 'NR>4 {print $1}'
+    cf services | awk 'NR>3 {print $1}'
 }
 _cf_bound_service()
 {
-    cf services | awk 'NR>4' | grep $1 | awk '{print $1}'
+    cf services | awk 'NR>3' | grep $1 | awk '{print $1}'
 }
 _cf_org()
 {
