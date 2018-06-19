@@ -55,7 +55,7 @@ _cf_complete()
             return 0
             ;;
         # app related commands and options
-        app|a|bind-service|bs|unbind-service|us|copy-source|create-app-manifest|delete|env|e|events|files|logs|rename|restage|rg|restart|rs|restart-app-instance|scale|set-env|se|start|st|stop|sp|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh|--recent|enable-diego|disable-diego)
+        app|a|bind-service|bs|unbind-service|us|copy-source|create-app-manifest|delete|env|e|events|files|logs|rename|restage|rg|restart|rs|restart-app-instance|scale|set-env|se|start|st|stop|sp|unset-env|get-health-check|set-health-check|enable-ssh|disable-ssh|ssh-enabled|ssh|--recent|enable-diego|disable-diego|tasks|run-task|terminate-task)
             COMPREPLY=( $(compgen -W "$(_cf_app)" -- $cur) )
             return 0
             ;;
